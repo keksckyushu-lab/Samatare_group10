@@ -48,6 +48,7 @@ def initialize_for_tdc():
 
     do_command(":TRIGger:SWEep NORMal")
 
+<<<<<<< HEAD
     do_command(":CHANnel1:DISPlay ON")
     do_command(":CHANnel2:DISPlay ON")
 
@@ -63,6 +64,24 @@ def initialize_for_tdc():
     do_command(":CHANnel2:SCALe 100E-3")
 
     do_command(":TIMebase:SCALe 10E-6")
+=======
+    do_command(":CHANnel1:DISPlay OFF")
+    do_command(":CHANnel2:DISPlay ON")
+    do_command(":CHANnel3:DISPlay ON")
+
+    do_command(":CHANnel2:PROBe 1")
+    do_command(":CHANnel3:PROBe 1")
+
+    # 動作実績のある旧版と同じ順序でトリガーを設定する
+    do_command(":TRIGger:SOURce CHANnel2")
+    do_command(":TRIGger:EDGE:SLOPe NEGative")
+    do_command(f":TRIGger:EDGE:LEVel {TRIGGER_LEVEL}")
+
+    do_command(":CHANnel2:SCALe 100E-3")
+    do_command(":CHANnel3:SCALe 100E-3")
+
+    do_command(":TIMebase:SCALe 5E-6")
+>>>>>>> 3b628f4 (ia)
 
     do_command(":WAVeform:FORMat BYTE")
     do_command(":WAVeform:UNSigned OFF")
@@ -79,7 +98,11 @@ def create_tdc_spectrum(output_dir, filename):
     os.makedirs(output_dir, exist_ok=True)
     output_filename = os.path.join(output_dir, filename)
 
+<<<<<<< HEAD
     # CH1の立下りとCH2の立下りの時間差を測定
+=======
+    # START=CH2の立下りとSTOP=CH3の立下りの時間差を測定
+>>>>>>> 3b628f4 (ia)
     do_command(":MEASure:DEFine DELay,-1,-1")
 
     valid_count = 0
@@ -93,17 +116,26 @@ def create_tdc_spectrum(output_dir, filename):
             if i == 0:
                 print(
                     "1回目の波形取得を開始しました。"
+<<<<<<< HEAD
                     "CH1の立下りトリガーを待っています..."
+=======
+                    "START=CH2の立下りトリガーを待っています..."
+>>>>>>> 3b628f4 (ia)
                 )
 
             # DIGitizeとOPC?を同じメッセージにして、波形取得完了まで待つ
             try:
+<<<<<<< HEAD
                 do_query_string(":DIGitize CHANnel1,CHANnel2;*OPC?")
+=======
+                do_query_string(":DIGitize CHANnel2,CHANnel3;*OPC?")
+>>>>>>> 3b628f4 (ia)
             except visa.errors.VisaIOError:
                 print(
                     f"波形取得が{TRIGGER_WAIT_TIMEOUT_MS / 1000:g}秒以内に完了しませんでした。"
                 )
                 print(
+<<<<<<< HEAD
                     f"CH1が{TRIGGER_LEVEL:g} Vを立下り方向に横切るか確認してください。"
                 )
                 raise
@@ -111,6 +143,15 @@ def create_tdc_spectrum(output_dir, filename):
             # CH1とCH2のdelayを取得
             result = do_query_string(
                 ":MEASure:DELay? CHANnel1,CHANnel2"
+=======
+                    f"START=CH2が{TRIGGER_LEVEL:g} Vを立下り方向に横切るか確認してください。"
+                )
+                raise
+
+            # START=CH2とSTOP=CH3のdelayを取得
+            result = do_query_string(
+                ":MEASure:DELay? CHANnel2,CHANnel3"
+>>>>>>> 3b628f4 (ia)
             )
 
             try:
@@ -155,7 +196,11 @@ def main():
         )
         print(
             f"例: python {sys.argv[0]} "
+<<<<<<< HEAD
             "output new_test_tdc_ch1_ch2.txt"
+=======
+            "output new_test_tdc_ch2_ch3.txt"
+>>>>>>> 3b628f4 (ia)
         )
         sys.exit(1)
 

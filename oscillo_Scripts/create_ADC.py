@@ -10,7 +10,7 @@ import env
 
 InfiniiVision = None
 debug = 0
-NUM_WAVEFORMS = 5000
+NUM_WAVEFORMS = 2000
 
 # =========================================================
 # ヘルパー関数群 (変更なし)

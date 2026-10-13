@@ -9,6 +9,7 @@
 !Slide/
 !Slide/**
 plot_scripts/
+output/
 **/__pycache__/
 *.pyc
 *.pyo
